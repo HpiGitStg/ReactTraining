@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "ava 'app/**/*.test.js' --verbose --require ./other/setup-ava-tests.js",
-    "production" : "webpack -p",
-    "start" : "webpack-dev-server"
+    "production": "webpack -p",
+    "start": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-router": "^4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
