@@ -1,31 +1,52 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Axios = require('axios');
+import JSONTree from 'react-json-tree';
 
-var DataProfile = {
-  name : "Kevin",
-  imageUrl : "http://www.rd.com/wp-content/uploads/sites/2/2016/04/01-cat-wants-to-tell-you-laptop.jpg"
+var DataApi = {
+  name : "CodepenJobs",
+  UrlJson : "https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json"
 }
-var ProfilPic = React.createClass({
-  render: function() {
-    return <img src={this.props.imageUrl} style={{height : 100, width :100}}/>
-  }
-});
 
-var ProfileName = React.createClass({
-  render: function() {
-    return <div> {this.props.name} </div>
+class JsonParse extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      name : "CodePenJobs",
+      UrlJson : "",
+      contentJson: ""
+    };
   }
-});
 
-var AvatarContainer = React.createClass({
-  render: function() {
-    return  <div>
-      <ProfileName name={this.props.profile.name}/>
-      <ProfilPic imageUrl={this.props.profile.imageUrl}/> </div>
+  render(){
+      var _this = this;
+      let UrlJson = this.props.data.UrlJson;
+    const config = {
+  method: 'get',
+  url: UrlJson,
+  headers: {'X-Requested-With': 'XMLHttpRequest'},
+  responseType: 'json',
+  withCredentials: false,
+  };
+
+
+
+    Axios.request(config).then(function(result) {
+
+    _this.setState({
+      contentJson :result,
+    });
+  });
+
+
+   return (
+    <JSONTree data={this.state.contentJson}/>
+    );
   }
-});
+}
+
 
 ReactDOM.render(
-  <AvatarContainer profile={DataProfile}/>,
+  <JsonParse data={DataApi}/>,
   document.getElementById('app')
 );
